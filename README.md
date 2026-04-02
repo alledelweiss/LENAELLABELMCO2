@@ -1,4 +1,5 @@
 SOCIAL GRAPH DATASET 
+
 ▪ For this project, you will work on a real-world dataset collected from Facebook (Traud,  Mucha & Porter, 2005). 
 ▪ The data is composed of complete Facebook networks of selected American colleges and  universities. It was collected as a snapshot of a single day in September 2005. In this  project, you can focus only on a few selected colleges or universities. 
 ▪ The data describes the structure of the social network within a given college or university.  It describes which accounts are friends with each other within the network. Names of the  people are anonymized. 
