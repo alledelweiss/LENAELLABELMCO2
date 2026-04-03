@@ -61,15 +61,15 @@ public class Graph {
         int numOfEdges = edges.length;
 
         for (int i = 0; i < numOfEdges; i++) {
-            int edge1 = edges[i][0];
-            int edge2 = edges[i][1];
+            int nodeA = edges[i][0];
+            int nodeB = edges[i][1];
 
             // add edge if not already in the list
-            if (!graph[edge1].contains(edge2)) {
-                graph[edge1].add(edge2);
+            if (!graph[nodeA].contains(nodeB)) {
+                graph[nodeA].add(nodeB);
             }
-            if (!graph[edge2].contains(edge1)) {
-                graph[edge2].add(edge1); 
+            if (!graph[nodeB].contains(nodeA)) {
+                graph[nodeB].add(nodeA); 
             }
         }
     }
