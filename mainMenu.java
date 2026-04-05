@@ -38,7 +38,7 @@ public class mainMenu {
                         handleFriendList();
                         break;
                     case 2:
-                        handleConnection();
+                       // handleConnection(); to be implemented
                         break;
                     case 3:
                         System.out.println("Exiting program...");
@@ -121,120 +121,5 @@ public class mainMenu {
         // Sort the list for consistent output
         java.util.Collections.sort(friends);
         return friends;
-    }
-    
-    /**
-     * Finds a connection (path) between two people using Breadth-First Search (BFS)
-     * @param start The starting person ID
-     * @param end The target person ID
-     * @return List representing the path from start to end, or null if no path exists
-     */
-    private List<Integer> findConnection(int start, int end) {
-        if (!hasVertex(start) || !hasVertex(end)) {
-            return null;
-        }
-        
-        if (start == end) {
-            List<Integer> path = new ArrayList<>();
-            path.add(start);
-            return path;
-        }
-        
-        // BFS setup
-        java.util.Queue<Integer> queue = new java.util.LinkedList<>();
-        int[] parent = new int[Graph.n];
-        boolean[] visited = new boolean[Graph.n];
-        
-        // Initialize parent array with -1
-        for (int i = 0; i < Graph.n; i++) {
-            parent[i] = -1;
-        }
-        
-        queue.offer(start);
-        visited[start] = true;
-        
-        while (!queue.isEmpty()) {
-            int current = queue.poll();
-            
-            // Check all neighbors of the current vertex
-            for (int neighbor : Graph.graph[current]) {
-                if (!visited[neighbor]) {
-                    visited[neighbor] = true;
-                    parent[neighbor] = current;
-                    
-                    if (neighbor == end) {
-                        // Found the target, reconstruct the path
-                        return reconstructPath(start, end, parent);
-                    }
-                    
-                    queue.offer(neighbor);
-                }
-            }
-        }
-        
-        // No path found
-        return null;
-    }
-    
-    /**
-     * Reconstructs the path from start to end using the parent array from BFS
-     * @param start The starting vertex
-     * @param end The ending vertex
-     * @param parent Array containing parent information for each visited vertex
-     * @return List representing the path from start to end
-     */
-    private List<Integer> reconstructPath(int start, int end, int[] parent) {
-        List<Integer> path = new ArrayList<>();
-        int current = end;
-        
-        while (current != start) {
-            path.add(current);
-            current = parent[current];
-        }
-        path.add(start);
-        
-        // Reverse to get path from start to end
-        java.util.Collections.reverse(path);
-        return path;
-    }
-    
-    /**
-     * Handles the connection feature
-     */
-    private void handleConnection() {
-        try {
-            System.out.print("Enter ID of first person: ");
-            int id1 = Integer.parseInt(scanner.nextLine().trim());
-            
-            System.out.print("Enter ID of second person: ");
-            int id2 = Integer.parseInt(scanner.nextLine().trim());
-            
-            // Check if IDs exist in the dataset
-            if (!hasVertex(id1)) {
-                System.out.println("Error: Person with ID " + id1 + " does not exist in the dataset.");
-                return;
-            }
-            
-            if (!hasVertex(id2)) {
-                System.out.println("Error: Person with ID " + id2 + " does not exist in the dataset.");
-                return;
-            }
-            
-            // Find and display the connection
-            List<Integer> path = findConnection(id1, id2);
-            
-            if (path == null || path.isEmpty()) {
-                System.out.println("Cannot find a connection between " + id1 + " and " + id2);
-            } else {
-                System.out.println("There is a connection from " + id1 + " to " + id2 + "!");
-                // Display the path
-                for (int i = 0; i < path.size() - 1; i++) {
-                    System.out.println(path.get(i) + " is friends with " + path.get(i + 1));
-                }
-            }
-            
-        } catch (NumberFormatException e) {
-            System.out.println("Error: Invalid ID format. Please enter valid integers.");
-        }
     }
 }
