@@ -19,32 +19,35 @@ public class Graph {
     // READ FILE (user inputs filename)
     public static int[][] readFile() {
         int[][] edges = null;
+        boolean success = false;
 
-        try {
-            Scanner input = new Scanner(System.in);
-            System.out.print("Input file path: ");
-            String fileName = input.nextLine();
+        Scanner input = new Scanner(System.in);
 
-            File file = new File(fileName);
-            Scanner fileReader = new Scanner(file);
+        do{
+            try{
+                System.out.print("Input file path: ");
+                String fileName = "data/" + input.nextLine();
 
-            n = fileReader.nextInt();
-            int e = fileReader.nextInt(); // number of friendships
+                File file = new File(fileName);
+                Scanner fileReader = new Scanner(file);
 
-            edges = new int[e][2];
+                n = fileReader.nextInt();
+                int e = fileReader.nextInt(); // number of friendships
 
-            // reading each pair of friends
-            for (int i = 0; i < e; i++) {
-                edges[i][0] = fileReader.nextInt(); // person1
-                edges[i][1] = fileReader.nextInt(); // person2
+                edges = new int[e][2];
+
+                // reading each pair of friends
+                for (int i = 0; i < e; i++) {
+                    edges[i][0] = fileReader.nextInt(); // person1
+                    edges[i][1] = fileReader.nextInt(); // person2
+                }
+
+                fileReader.close();
+                success = true;
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found. Please try again.\n");
             }
-
-            fileReader.close();
-
-        } catch (FileNotFoundException e) {
-            System.err.println("File not found.");
-            e.printStackTrace();
-        }
+        } while (!success);
 
         return edges;
     }
