@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 import java.util.Scanner;
 
 /**
@@ -38,7 +39,7 @@ public class mainMenu {
                         handleFriendList();
                         break;
                     case 2:
-                       // handleConnection(); to be implemented
+                       handleConnection(); 
                         break;
                     case 3:
                         System.out.println("Exiting program...");
@@ -92,6 +93,72 @@ public class mainMenu {
             
         } catch (NumberFormatException e) {
             System.out.println("Error: Invalid ID format. Please enter a valid integer.");
+        }
+    }
+
+    private void handleConnection() {
+        try {
+            System.out.print("Enter ID of first person: ");
+            int start = Integer.parseInt(scanner.nextLine().trim());
+            System.out.print("Enter ID of second person: ");
+            int end = Integer.parseInt(scanner.nextLine().trim());
+
+            if(!hasVertex(start) || !hasVertex(end)) {
+                System.out.println("Error: One or both IDs do not exist in the dataset.");
+                return;
+            }
+
+            //BFS setup
+            boolean[] visited = new boolean[Graph.n];
+            int[] parent = new int[Graph.n]; //to reconstruct path
+            for(int i = 0; i < Graph.n; i++){
+                parent[i] = -1; //initialize parent
+            }
+
+            Queue<Integer> queue = new java.util.LinkedList<>();
+            visited[start] = true;
+            queue.add(start);
+
+            boolean found = false;
+
+            //BFS Traversal
+            while(!queue.isEmpty() && ! found){
+                int current = queue.poll();
+                ArrayList<Integer> neighbors = Graph.graph[current];
+                for(int i = 0; i < neighbors.size(); i++){
+                    int neighbor = neighbors.get(i);
+
+                    if(!visited[neighbor]) {
+                        visited[neighbor] = true;
+                        parent[neighbor] = current;
+                        queue.add(neighbor);
+
+                        if(neighbor == end){
+                            found = true;
+                        }
+                    }
+                }
+            }
+
+            // if connection is found, reconstruct path
+            if(found){
+                System.out.println("There is a connection from " + start + " to " + end + "!");
+                ArrayList<Integer> path = new ArrayList<>();
+                int current = end;
+                while (current != -1){
+                    path.add(0, current); //add to the front of the path
+                    current = parent[current];
+                }
+
+                // Print connection steps
+                for(int i = 0; i < path.size() - 1; i++){
+                    System.out.println(path.get(i) + " is friends with " + path.get(i + 1));
+                }
+            } else {
+                System.out.println("Cannot find a connection between " + start + " and " + end + ".");
+            }
+        } catch (NumberFormatException e){
+            System.out.println("Error: Invalid ID format. Please enter valid integers.");
         }
     }
     
