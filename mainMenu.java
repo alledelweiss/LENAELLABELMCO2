@@ -96,6 +96,9 @@ public class mainMenu {
         }
     }
 
+    /**
+     * Finds and displays the shortest connection path between two users using BFS traversal.
+     */
     private void handleConnection() {
         try {
             System.out.print("Enter ID of first person: ");
