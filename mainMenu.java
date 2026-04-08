@@ -28,7 +28,7 @@ public class mainMenu {
             System.out.println("\nMAIN MENU");
             System.out.println("[1] Get friend list");
             System.out.println("[2] Get connection");
-            System.out.println("[3] Exit");
+            System.out.println("[3] Exit\n");
             System.out.print("Enter your choice: ");
             
             try {
@@ -74,7 +74,8 @@ public class mainMenu {
             
             // Get and display the friend list
             List<Integer> friends = getFriends(id);
-            
+
+            System.out.println();
             if (friends == null || friends.isEmpty()) {
                 System.out.println("Person " + id + " has no friends.");
             } else {
@@ -145,6 +146,7 @@ public class mainMenu {
 
             // if connection is found, reconstruct path
             if(found){
+                System.out.println();
                 System.out.println("There is a connection from " + start + " to " + end + "!");
                 ArrayList<Integer> path = new ArrayList<>();
                 int current = end;
